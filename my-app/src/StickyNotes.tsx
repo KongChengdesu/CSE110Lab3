@@ -109,7 +109,9 @@ function Grid() {
         </input>
         </div>
 
-        <div><textarea onChange={(event) =>
+        <div><textarea 
+          placeholder='Note Content'
+          onChange={(event) =>
           setCreateNote({ ...createNote, content: event.target.value })}
           required>
         </textarea></div>
