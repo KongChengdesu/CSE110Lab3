@@ -65,7 +65,9 @@ describe("Create StickyNote", () => {
         checkNote("Note 4", "Note 4 content");
 
     });
+});
 
+describe("Update StickyNote", () => {
     test("update a note and check if it is displayed", () => {
         render(<StickyNotes />);    
 
@@ -86,6 +88,9 @@ describe("Create StickyNote", () => {
         expect(updatedNoteLabel).toBeInTheDocument();
 
     });
+});
+
+describe("Delete StickyNote", () => {
 
     test("delete the first note and check if it is removed", () => {
         render(<StickyNotes />);
@@ -106,14 +111,50 @@ describe("Create StickyNote", () => {
     test("delete all notes and check if they are removed", () => {
         render(<StickyNotes />);
 
-        const deleteNoteButtons = screen.getAllByText("x", { selector: "button" });
-
-        deleteNoteButtons.forEach((button) => {
-            fireEvent.click(button);
-        });
+        const deleteFirst = () => {
+            const deleteNoteButton = screen.getAllByText("x", { selector: "button" })[0];
+            fireEvent.click(deleteNoteButton);
+        }
+        
+        for(let i = 0; i < 6; i++) deleteFirst();
 
         const favoriteButton = screen.queryByText("♡", { selector: "button" });
         
         expect(favoriteButton).toBeNull();
+    });
+
+});
+
+describe("Favorite StickyNote", () => {
+   
+    test("favorite a note and check if the list updates", () => {
+
+        render(<StickyNotes />);
+
+        const favoriteButton = screen.getAllByText("♡", { selector: "button" })[0];
+        fireEvent.click(favoriteButton);
+
+        const favoriteList = screen.getByText("List of favorites:");
+        const favoriteNote = screen.getAllByText("test note 1 title");
+
+        expect(favoriteList).toBeInTheDocument();
+        expect(favoriteNote.length).toBe(2);
+    });
+
+    test("unfavorite a note and check if the list updates", () => {
+
+        render(<StickyNotes />);
+
+        const favoriteButton = screen.getAllByText("♡", { selector: "button" })[0];
+        fireEvent.click(favoriteButton);
+
+        const unfavoriteButton = screen.getAllByText("♥", { selector: "button" })[0];
+        fireEvent.click(unfavoriteButton);
+
+        const favoriteList = screen.queryByText("List of favorites:");
+        const favoriteNote = screen.queryAllByText("test note 1 title");
+
+        expect(favoriteList).toBeInTheDocument();
+        expect(favoriteNote.length).toBe(1);
     });
 });
