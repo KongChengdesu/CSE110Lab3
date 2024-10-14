@@ -2,7 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 
 import { Label, Note } from './types';
-import { dummyNotesList } from './constant';
+import { dummyNotesList } from './constants';
 
 import { ThemeContext, themes } from './ThemeContext';
 

@@ -12,3 +12,4 @@ export type Note = {
     label: Label;
 };
 
+export type GroceryItem = { name: string; isPurchased: boolean };
