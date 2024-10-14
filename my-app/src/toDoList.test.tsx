@@ -15,6 +15,10 @@ describe("Render to do list", () => {
         expect(toDoListItem2).toBeInTheDocument();
     });
 
+});
+
+describe("Check to do list", () => {
+
     test("check a bought item", () => {
 
         render(<ToDoList />);
@@ -31,6 +35,23 @@ describe("Render to do list", () => {
         const toDoListBoughtItems2 = screen.getByText("Items bought: 2");
         expect(toDoListBoughtItems2).toBeInTheDocument();
 
-    })
+    });
+
+    test("uncheck a bought item", () => {
+
+        render(<ToDoList />);
+
+        const toDoListCheckbox = screen.getAllByRole("checkbox", { checked: false })[0];
+
+        fireEvent.click(toDoListCheckbox);
+        const toDoListBoughtItems = screen.getByText("Items bought: 1");
+        expect(toDoListBoughtItems).toBeInTheDocument();
+
+        fireEvent.click(toDoListCheckbox);
+        const toDoListBoughtItems2 = screen.getByText("Items bought: 0");
+        expect(toDoListBoughtItems2).toBeInTheDocument();
+
+    });
+
 
 });
